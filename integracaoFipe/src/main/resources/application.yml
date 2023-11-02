@@ -1,9 +1,0 @@
-spring:
-  data:
-    mongodb:
-      database: Integrations
-      host: integracaoFipeMongodb
-      port: 27017
-api:
-  external:
-    url: https://parallelum.com.br/fipe/api/v1/

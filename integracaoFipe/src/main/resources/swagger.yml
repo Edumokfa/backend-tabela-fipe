@@ -1,0 +1,98 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: API Documentation
+paths:
+  /brands:
+    get:
+      summary: Get all brands
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Brand'
+    post:
+      summary: Create a new brand
+      parameters:
+        - in: body
+          name: brand
+          schema:
+            $ref: '#/definitions/Brand'
+      responses:
+        201:
+          description: Brand created successfully
+  /brands/{brandId}:
+    get:
+      summary: Get a brand by ID
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Brand'
+        404:
+          description: Brand not found
+    put:
+      summary: Update a brand by ID
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          type: integer
+        - in: body
+          name: brand
+          schema:
+            $ref: '#/definitions/Brand'
+      responses:
+        200:
+          description: Brand updated successfully
+        404:
+          description: Brand not found
+    delete:
+      summary: Delete a brand by ID
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          type: integer
+      responses:
+        204:
+          description: Brand deleted successfully
+        404:
+          description: Brand not found
+  /models:
+    get:
+      summary: Get all models
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Model'
+definitions:
+  Brand:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+  Model:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+      name:
+        type: string
+      brandId:
+        type: integer
+        format: int32

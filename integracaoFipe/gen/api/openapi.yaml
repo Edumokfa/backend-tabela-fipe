@@ -1,0 +1,138 @@
+openapi: 3.0.1
+info:
+  title: API Documentation
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /brands:
+    get:
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/Brand'
+                type: array
+          description: Successful response
+      summary: Get all brands
+      x-accepts: '*/*'
+    post:
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Brand'
+        required: false
+      responses:
+        "201":
+          content: {}
+          description: Brand created successfully
+      summary: Create a new brand
+      x-codegen-request-body-name: brand
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /brands/{brandId}:
+    delete:
+      parameters:
+      - in: path
+        name: brandId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          content: {}
+          description: Brand deleted successfully
+        "404":
+          content: {}
+          description: Brand not found
+      summary: Delete a brand by ID
+      x-accepts: application/json
+    get:
+      parameters:
+      - in: path
+        name: brandId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Brand'
+          description: Successful response
+        "404":
+          content: {}
+          description: Brand not found
+      summary: Get a brand by ID
+      x-accepts: '*/*'
+    put:
+      parameters:
+      - in: path
+        name: brandId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Brand'
+        required: false
+      responses:
+        "200":
+          content: {}
+          description: Brand updated successfully
+        "404":
+          content: {}
+          description: Brand not found
+      summary: Update a brand by ID
+      x-codegen-request-body-name: brand
+      x-contentType: '*/*'
+      x-accepts: application/json
+  /models:
+    get:
+      responses:
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/Model'
+                type: array
+          description: Successful response
+      summary: Get all models
+      x-accepts: '*/*'
+components:
+  schemas:
+    Brand:
+      example:
+        name: name
+        id: 0
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+      type: object
+    Model:
+      example:
+        brandId: 6
+        name: name
+        id: 0
+      properties:
+        id:
+          format: int32
+          type: integer
+        name:
+          type: string
+        brandId:
+          format: int32
+          type: integer
+      type: object
+x-original-swagger-version: "2.0"
+
