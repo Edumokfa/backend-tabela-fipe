@@ -1,4 +1,4 @@
-package org.example.utils;
+package br.com.integracaoFipe.integracaoFipe.utils;
 
 import java.util.Collection;
 

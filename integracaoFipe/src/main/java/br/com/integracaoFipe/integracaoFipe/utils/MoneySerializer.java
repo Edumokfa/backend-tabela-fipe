@@ -1,4 +1,4 @@
-package org.example.utils;
+package br.com.integracaoFipe.integracaoFipe.utils;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
