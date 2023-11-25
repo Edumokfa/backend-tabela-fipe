@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/marca")
+@RequestMapping("/api/marcas")
 public class ModelController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class ModelController {
             @ApiResponse(responseCode = "200", description = "Retorna uma lista de modelos, com todos os anos de cada modelo, e todos os veículos de cada ano")
     })
     @CrossOrigin(origins = "*")
-    @GetMapping("/{brandId}/modelo")
+    @GetMapping("/{brandId}/modelos")
     public ResponseEntity<List<Model>> getModels(@PathVariable @Parameter(description = "Código da marca") Integer brandId) {
         return modelService.getAllModelsFromBrand(brandId);
     }

@@ -20,7 +20,7 @@ public class BrandController {
     private BrandService brandService;
 
     @Operation(description = "GET responsável por obter todas as marcas disponíveis na tabela FIPE")
-    @GetMapping("/marca")
+    @GetMapping("/marcas")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna uma lista com todas as marcas disponíveis")
     })
@@ -30,7 +30,7 @@ public class BrandController {
     }
 
     @Operation(description = "POST responsável por salvar uma nova marca no cache da aplicação")
-    @PostMapping("/marca")
+    @PostMapping("/marcas")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna a própria marca caso ela seja salva com sucesso no banco de dados"),
             @ApiResponse(responseCode = "409", description = "Retorna este erro quando o código da marca já estiver cadastrado")
@@ -41,7 +41,7 @@ public class BrandController {
     }
 
     @Operation(description = "PUT responsável por atualizar uma marca no cache da aplicação")
-    @PutMapping("/marca")
+    @PutMapping("/marcas")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna sucesso caso a marca seja atualizada com sucesso no banco de dados"),
             @ApiResponse(responseCode = "404", description = "Retorna este erro quando o código da marca não estiver cadastrada")
@@ -52,7 +52,7 @@ public class BrandController {
     }
 
     @Operation(description = "DELETE responsável por apagar uma marca no cache da aplicação")
-    @DeleteMapping("/marca/{brandId}")
+    @DeleteMapping("/marcas/{brandId}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna sucesso caso a marca seja removida com sucesso no banco de dados"),
             @ApiResponse(responseCode = "404", description = "Retorna este erro quando o código da marca não estiver cadastrada")

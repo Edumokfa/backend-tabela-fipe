@@ -45,7 +45,7 @@ public class ModelService extends BaseApiCommunication {
         return ResponseEntity.ok(allModels);
     }
 
-    private List<Model> getModelsFromApi(Integer brandId) {
+    public List<Model> getModelsFromApi(Integer brandId) {
         ParameterizedTypeReference responseModelType = new ParameterizedTypeReference<Map<String, List<Model>>>() {
         };
         Map<String, List<Model>> modelResponseBody = getMapListDataFromUrl(getModelsApiUrl(brandId), responseModelType);
@@ -95,6 +95,10 @@ public class ModelService extends BaseApiCommunication {
             filteredVehicles = vehicleService.getFilteredVehicle(brandId, startYear, endYear, minValue, maxValue, gasType, vehicleType);
         }
         return ResponseEntity.ok(filteredVehicles);
+    }
+
+    public void deleteAllModels() {
+        modelsRepository.deleteAll();
     }
 
     private String getModelsApiUrl(Integer brandId) {

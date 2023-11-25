@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -36,8 +38,8 @@ public class BrandServiceTest {
     @Test
     public void testGetAllBrandsFromDatabase() {
         List<Brand> mockBrands = new ArrayList<>();
-        mockBrands.add(new Brand(1, "Brand1"));
-        mockBrands.add(new Brand(2, "Brand2"));
+        mockBrands.add(new Brand(1, "Brand1", "Moto"));
+        mockBrands.add(new Brand(2, "Brand2", "Carro"));
 
         when(brandsRepository.findAll()).thenReturn(mockBrands);
 
@@ -52,7 +54,7 @@ public class BrandServiceTest {
 
     @Test
     public void testCreateBrand() {
-        Brand newBrand = new Brand(600, "NewBrand");
+        Brand newBrand = new Brand(600, "NewBrand", "Carro");
 
         when(brandsRepository.save(newBrand)).thenReturn(newBrand);
 
@@ -66,7 +68,7 @@ public class BrandServiceTest {
 
     @Test
     public void testCreateBrandWithExistingId() {
-        Brand existingBrand = new Brand(1, "ExistingBrand");
+        Brand existingBrand = new Brand(1, "ExistingBrand", "Moto");
 
         List<Brand> mockBrands = new ArrayList<>();
         mockBrands.add(existingBrand);
@@ -80,4 +82,31 @@ public class BrandServiceTest {
 
         verify(brandsRepository, never()).save(any());
     }
+    @Test
+    public void testUpdateBrand() {
+        Brand brandToUpdate = new Brand(1, "Toyota", "Car");
+
+        when(brandsRepository.findById(brandToUpdate.get_id())).thenReturn(Optional.of(brandToUpdate));
+        when(brandsRepository.save(Mockito.any(Brand.class))).thenReturn(brandToUpdate);
+
+        ResponseEntity responseEntity = brandService.updateBrand(brandToUpdate);
+
+        assertEquals(ResponseEntity.ok(brandToUpdate), responseEntity);
+        verify(brandsRepository).findById(brandToUpdate.get_id());
+        verify(brandsRepository).save(brandToUpdate);
+    }
+
+    @Test
+    public void testDeleteBrand() {
+        Integer brandIdToDelete = 1;
+        Brand brandToDelete = new Brand(brandIdToDelete, "Toyota", "Car");
+
+        when(brandsRepository.findById(brandIdToDelete)).thenReturn(Optional.of(brandToDelete));
+        ResponseEntity responseEntity = brandService.deleteBrand(brandIdToDelete);
+
+        assertEquals(ResponseEntity.ok().build(), responseEntity);
+        verify(brandsRepository).findById(brandIdToDelete);
+        verify(brandsRepository).delete(brandToDelete);
+    }
+
 }

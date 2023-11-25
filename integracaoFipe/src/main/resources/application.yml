@@ -7,3 +7,4 @@ spring:
 api:
   external:
     url: https://parallelum.com.br/fipe/api/v1/
+

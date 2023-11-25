@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a00a4a51-fbd2-4fa4-8ebe-e4f6f0042d1e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/controller/FipeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/controller/FipeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/service/WeeklySearch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/dao/BrandsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/dao/BrandsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/service/BrandService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/service/BrandService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/service/ModelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/integracaoFipe/src/main/java/br/com/integracaoFipe/integracaoFipe/service/ModelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/integracaoFipe/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/integracaoFipe/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,15 +25,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/edumo/Documents/GitHub/desafioIntegracaoTabelaFipe/integracaoFipe",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/edumo/Documents/GitHub/desafioIntegracaoTabelaFipe/integracaoFipe&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\edumo\Documents\GitHub\desafioIntegracaoTabelaFipe\integracaoFipe\src\main\java\br\com\integracaoFipe\integracaoFipe\model" />
@@ -49,6 +53,8 @@
       <workItem from="1700880699676" duration="154000" />
       <workItem from="1700880861568" duration="42000" />
       <workItem from="1700881359111" duration="23000" />
+      <workItem from="1700933400439" duration="47000" />
+      <workItem from="1700933455538" duration="47000" />
     </task>
     <servers />
   </component>
