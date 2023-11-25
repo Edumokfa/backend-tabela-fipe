@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -44,12 +45,27 @@ public class BrandService extends BaseApiCommunication {
         return brandsRepository.findAll();
     }
 
+    public ResponseEntity updateBrand(Brand brand) {
+        Brand brandOnDb = brandsRepository.findById(brand.get_id()).get();
+        if ( brandOnDb == null ) {
+            return ResponseEntity.notFound().build();
+        }
+        brandsRepository.save(brand);
+        return ResponseEntity.ok(brand);
+    }
+
     private List<Brand> getBrandsFromApi() {
         List<Brand> brands = new ArrayList<>();
         ParameterizedTypeReference responseType = new ParameterizedTypeReference<List<Brand>>() {};
-        brands.addAll(getListDataFromUrl("/carros/marcas", responseType));
-        brands.addAll(getListDataFromUrl("/motos/marcas", responseType));
-        brands.addAll(getListDataFromUrl("/caminhoes/marcas", responseType));
+        List<Brand> carBrands = getListDataFromUrl("/carros/marcas", responseType);
+        List<Brand> bikeBrands = getListDataFromUrl("/motos/marcas", responseType);
+        List<Brand> truckBrands = getListDataFromUrl("/caminhoes/marcas", responseType);
+        carBrands.forEach(c -> c.setType("Carro"));
+        bikeBrands.forEach(c -> c.setType("Moto"));
+        truckBrands.forEach(c -> c.setType("Caminhão"));
+        brands.addAll(carBrands);
+        brands.addAll(bikeBrands);
+        brands.addAll(truckBrands);
         brandsRepository.saveAll(brands);
         return brands;
     }

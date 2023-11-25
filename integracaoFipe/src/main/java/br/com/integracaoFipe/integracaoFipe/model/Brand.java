@@ -20,4 +20,6 @@ public class Brand implements Serializable {
     private int _id;
     @JsonProperty("nome")
     private String name;
+    @JsonProperty("tipo")
+    private String type;
 }

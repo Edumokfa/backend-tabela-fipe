@@ -2,7 +2,7 @@ spring:
   data:
     mongodb:
       database: Integrations
-      host: integracaoFipeMongodb
+      host: localhost
       port: 27017
 api:
   external:
