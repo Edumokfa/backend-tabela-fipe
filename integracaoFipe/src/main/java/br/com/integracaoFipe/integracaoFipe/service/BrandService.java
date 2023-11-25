@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BrandService extends BaseApiCommunication {
@@ -46,12 +47,21 @@ public class BrandService extends BaseApiCommunication {
     }
 
     public ResponseEntity updateBrand(Brand brand) {
-        Brand brandOnDb = brandsRepository.findById(brand.get_id()).get();
-        if ( brandOnDb == null ) {
+        Optional<Brand> brandOnDb = brandsRepository.findById(brand.get_id());
+        if (!brandOnDb.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         brandsRepository.save(brand);
         return ResponseEntity.ok(brand);
+    }
+
+    public ResponseEntity deleteBrand(Integer brandId) {
+        Optional<Brand> brandOnDb = brandsRepository.findById(brandId);
+        if (!brandOnDb.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        brandsRepository.delete(brandOnDb.get());
+        return ResponseEntity.ok().build();
     }
 
     private List<Brand> getBrandsFromApi() {
