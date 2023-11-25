@@ -17,7 +17,7 @@ public class Brand implements Serializable {
 
     @Id
     @JsonProperty("codigo")
-    private int _id;
+    private Integer _id;
     @JsonProperty("nome")
     private String name;
     @JsonProperty("tipo")

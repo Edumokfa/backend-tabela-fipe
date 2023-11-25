@@ -33,11 +33,20 @@ public class BrandService extends BaseApiCommunication {
 
     public ResponseEntity createBrand(Brand brand) {
         List<Brand> allBrands = getAllBrands().getBody();
-        final int brandId = brand.get_id();
-        boolean existsBrandId = allBrands.stream().anyMatch(b -> b.get_id() == brandId);
+        Integer brandId = brand.get_id();
+        Integer finalBrandId = brandId;
+
+        if (brandId == null) {
+            brandId = allBrands.stream().map(Brand::get_id).max(Integer::compare).orElse(0);
+            brand.set_id(brandId + 1);
+        }
+
+        boolean existsBrandId = allBrands.stream().anyMatch(b -> b.get_id() == finalBrandId);
+
         if (existsBrandId) {
             return ResponseEntity.status(HttpStatus.CONFLICT.value()).body("O código " + brand.get_id() + " já existe");
         }
+
         brandsRepository.save(brand);
         return ResponseEntity.ok(brand);
     }
