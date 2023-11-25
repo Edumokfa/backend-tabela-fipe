@@ -64,10 +64,6 @@ public class BrandService extends BaseApiCommunication {
         return ResponseEntity.ok().build();
     }
 
-    public void deleteAllBrands(){
-        brandsRepository.deleteAll();
-    }
-
     public List<Brand> getBrandsFromApi() {
         List<Brand> brands = new ArrayList<>();
         ParameterizedTypeReference responseType = new ParameterizedTypeReference<List<Brand>>() {};

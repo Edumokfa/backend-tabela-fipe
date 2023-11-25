@@ -20,9 +20,7 @@ public class WeeklySearch {
     @Scheduled(fixedDelay = 7, timeUnit = TimeUnit.DAYS)
     @Transactional
     public void executeWeeklyTask() {
-        brandService.deleteAllBrands();
         List<Brand> brands = brandService.getBrandsFromApi();
-        modelService.deleteAllModels();
         brands.forEach(brand -> {
             modelService.getModelsFromApi(brand.get_id());
         });

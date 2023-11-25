@@ -97,10 +97,6 @@ public class ModelService extends BaseApiCommunication {
         return ResponseEntity.ok(filteredVehicles);
     }
 
-    public void deleteAllModels() {
-        modelsRepository.deleteAll();
-    }
-
     private String getModelsApiUrl(Integer brandId) {
         return "/carros/marcas/" + brandId + "/modelos";
     }
