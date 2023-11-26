@@ -1,7 +1,5 @@
 package br.com.integracaoFipe.integracaoFipe.model;
 
-import br.com.integracaoFipe.integracaoFipe.utils.MoneyDeserializer;
-import br.com.integracaoFipe.integracaoFipe.utils.MoneySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -32,9 +30,7 @@ public class Vehicle implements Serializable {
     @JsonProperty("TipoVeiculo")
     private String type;
     @JsonProperty("Valor")
-    @JsonSerialize(using = MoneySerializer.class)
-    @JsonDeserialize(using = MoneyDeserializer.class)
-    private BigDecimal value;
+    private String value;
     @JsonProperty("Marca")
     private String brand;
     @JsonProperty("CodigoMarca")

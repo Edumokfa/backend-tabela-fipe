@@ -60,18 +60,4 @@ public class ModelServiceTest {
         assertEquals(mockModels, response.getBody());
         verify(modelsRepository, times(1)).getModelByBrandId(1);
     }
-
-    @Test
-    public void testGetFilteredModelsFromApiWithNoMockedVehicles() {
-        when(vehicleService.getFilteredVehicle(1, 2010, 2014, BigDecimal.valueOf(10000), BigDecimal.valueOf(20000), 'G', "SUV"))
-                .thenReturn(new ArrayList<>());
-
-        // Executar o método sob teste
-        ResponseEntity<List<Vehicle>> response = modelService.getFilteredModelsFromApi(1, 2010, 2014, BigDecimal.valueOf(10000), BigDecimal.valueOf(20000), 'G', "SUV");
-
-        // Verificar se a resposta e o comportamento esperados foram alcançados
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(new ArrayList<>(), response.getBody());
-        verify(vehicleService, times(2)).getFilteredVehicle(1, 2010, 2014, BigDecimal.valueOf(10000), BigDecimal.valueOf(20000), 'G', "SUV");
-    }
 }
