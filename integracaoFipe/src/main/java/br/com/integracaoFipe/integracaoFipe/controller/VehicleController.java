@@ -26,4 +26,14 @@ public class VehicleController {
     public ResponseEntity countVehicles() {
         return vehicleService.countVehicles();
     }
+
+    @Operation(description = "GET responsável por contar quantos veículos existem no cache da aplicação")
+    @GetMapping("/vehicles/grafico")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna sucesso caso seja possível contar quantos veículos existem no cache da aplicação"),
+    })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity getTop10Vehicles() {
+        return vehicleService.getTop10ModelsWithModelYears();
+    }
 }
