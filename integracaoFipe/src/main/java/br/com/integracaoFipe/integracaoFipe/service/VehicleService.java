@@ -24,46 +24,6 @@ public class VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public List<Vehicle> getFilteredVehicle(
-            Integer brandId,
-            Integer startYear,
-            Integer endYear,
-            BigDecimal minValue,
-            BigDecimal maxValue,
-            Character gasType,
-            String type) {
-
-        Criteria criteria = Criteria.where("brandId").is(brandId);
-
-        if (startYear != null && endYear != null) {
-            criteria.and("year").gte(startYear).lte(endYear);
-        }
-
-        if (minValue != null && maxValue != null){
-            criteria.and("value").gte(minValue).lte(maxValue);
-        }
-
-        if (gasType != null) {
-            criteria.and("gasType").is(gasType);
-        }
-        if (type != null) {
-            String typeFilter;
-            if (type.equals("Carro")) {
-                typeFilter = "1";
-            } else if (type.equals("Moto")) {
-                typeFilter = "2";
-            } else if (type.equals("Caminhao")) {
-                typeFilter = "3";
-            } else {
-                return new ArrayList<>();
-            }
-            criteria.and("type").is(typeFilter);
-        }
-
-        Query query = new Query(criteria);
-        return mongoTemplate.find(query, Vehicle.class);
-    }
-
     public ResponseEntity countVehicles() {
         return ResponseEntity.ok(vehicleRepository.count());
     }

@@ -11,9 +11,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +22,11 @@ public class ModelService extends BaseApiCommunication {
     private final ModelsYearRepository modelsYearRepository;
     private final VehicleRepository vehicleRepository;
     private final IterationLogService iterationLogService;
-    private final VehicleService vehicleService;
 
-    public ModelService(ModelsRepository modelsRepository, ModelsYearRepository modelsYearRepository, VehicleRepository vehicleRepository, VehicleService vehicleService, IterationLogService iterationLogService) {
+    public ModelService(ModelsRepository modelsRepository, ModelsYearRepository modelsYearRepository, VehicleRepository vehicleRepository, IterationLogService iterationLogService) {
         this.modelsRepository = modelsRepository;
         this.modelsYearRepository = modelsYearRepository;
         this.vehicleRepository = vehicleRepository;
-        this.vehicleService = vehicleService;
         this.iterationLogService = iterationLogService;
     }
 
@@ -80,26 +76,6 @@ public class ModelService extends BaseApiCommunication {
             my.setVehicle(vehicle);
         });
         return modelYears;
-    }
-
-    public ResponseEntity<List<Vehicle>> getFilteredModelsFromApi(Integer brandId, Integer startYear, Integer endYear, BigDecimal minValue, BigDecimal maxValue, Character gasType, String vehicleType) {
-        List<Vehicle> filteredVehicles = vehicleService.getFilteredVehicle(brandId, startYear, endYear, minValue, maxValue, gasType, vehicleType);
-
-        if (ListUtil.isNotEmpty(filteredVehicles)) {
-            boolean hasMonthDiffActual = filteredVehicles.stream().anyMatch(vehicle -> vehicle.isMonthDiffActual());
-            if (hasMonthDiffActual) {
-                filteredVehicles.clear();
-            }
-        }
-
-        if (ListUtil.isEmpty(filteredVehicles)) {
-            boolean existsModelFromBrandId = modelsRepository.existsModelByBrandId(brandId);
-            if (!existsModelFromBrandId) {
-                getModelsFromApi(brandId);
-            }
-            filteredVehicles = vehicleService.getFilteredVehicle(brandId, startYear, endYear, minValue, maxValue, gasType, vehicleType);
-        }
-        return ResponseEntity.ok(filteredVehicles);
     }
 
     public ResponseEntity countModels() {

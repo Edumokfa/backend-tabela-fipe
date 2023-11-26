@@ -9,6 +9,4 @@ public interface ModelsRepository extends MongoRepository<Model, String> {
 
     public List<Model> getModelByBrandId(Integer brandId);
 
-    public boolean existsModelByBrandId(Integer brandId);
-
 }
