@@ -18,7 +18,6 @@ public class WeeklySearch {
     private ModelService modelService;
 
     @Scheduled(fixedDelay = 7, timeUnit = TimeUnit.DAYS)
-    @Transactional
     public void executeWeeklyTask() {
         List<Brand> brands = brandService.getBrandsFromApi();
         brands.forEach(brand -> {

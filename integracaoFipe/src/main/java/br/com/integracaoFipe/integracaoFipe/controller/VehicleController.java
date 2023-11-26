@@ -1,7 +1,10 @@
 package br.com.integracaoFipe.integracaoFipe.controller;
 
+import br.com.integracaoFipe.integracaoFipe.model.Brand;
+import br.com.integracaoFipe.integracaoFipe.model.Vehicle;
 import br.com.integracaoFipe.integracaoFipe.service.VehicleService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +38,26 @@ public class VehicleController {
     @CrossOrigin(origins = "*")
     public ResponseEntity getTop10Vehicles() {
         return vehicleService.getTop10ModelsWithModelYears();
+    }
+
+    @Operation(description = "PUT responsável por atualizar os veículos no cache da aplicação")
+    @PutMapping("/veiculos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna sucesso caso o veículo seja atualizado com sucesso"),
+    })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity updateVehicles(@RequestBody Vehicle vehicle) {
+        return vehicleService.updateVehicle(vehicle);
+    }
+
+    @Operation(description = "PUT responsável por atualizar os veículos no cache da aplicação")
+    @DeleteMapping("/veiculos/{codigoFipe}/{codigoAno}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna sucesso caso o veículo seja atualizado com sucesso"),
+    })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity deleteVehicles(@PathVariable @Parameter(description = "Código da fipe") String codigoFipe, @PathVariable @Parameter(description = "Código da ano") String codigoAno) {
+        vehicleService.deleteVehicle(codigoFipe, codigoAno);
+        return ResponseEntity.ok().build();
     }
 }

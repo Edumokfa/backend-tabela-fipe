@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +23,15 @@ public class Brand implements Serializable {
     private String name;
     @JsonProperty("tipo")
     private String type;
+
+    @JsonIgnore
+    public String getTypeUnformatted(){
+        if ("Carro".equals(type)){
+            return "/carros";
+        } else if ("Moto".equals(type)) {
+            return "/motos";
+        } else {
+            return "/caminhoes";
+        }
+    }
 }

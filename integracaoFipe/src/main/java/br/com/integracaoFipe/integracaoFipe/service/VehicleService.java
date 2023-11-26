@@ -61,4 +61,13 @@ public class VehicleService {
         }
         return ResponseEntity.ok(graphicData);
     }
+
+    public ResponseEntity updateVehicle(Vehicle vehicle){
+        return ResponseEntity.ok(vehicleRepository.save(vehicle));
+    }
+
+    public void deleteVehicle(String codigoFipe, String codigoAno){
+        VehicleId id = new VehicleId(codigoFipe, codigoAno);
+        vehicleRepository.deleteById(id);
+    }
 }

@@ -6,4 +6,4 @@ spring:
       port: 27017
 api:
   external:
-    url: https://parallelum.com.br/fipe/api/v1/
+    url: https://parallelum.com.br/fipe/api/v1

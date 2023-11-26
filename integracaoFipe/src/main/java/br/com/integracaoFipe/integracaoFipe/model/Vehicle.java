@@ -23,7 +23,7 @@ import java.util.Locale;
 public class Vehicle implements Serializable {
 
     @Id
-    @JsonIgnore
+    @JsonProperty("Codigo")
     private VehicleId _id;
     @JsonProperty("CodigoFipe")
     private String fipeCode;
@@ -46,14 +46,4 @@ public class Vehicle implements Serializable {
     @JsonProperty("MesReferencia")
     private String refMonth;
 
-    @JsonIgnore
-    public boolean isMonthDiffActual(){
-        if (refMonth == null) {
-            return false;
-        }
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM", Locale.getDefault());
-        String actualMonthName = currentDate.format(format);
-        return refMonth.contains(actualMonthName);
-    }
 }

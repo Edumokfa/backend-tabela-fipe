@@ -10,6 +10,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -77,6 +78,7 @@ public class BrandService extends BaseApiCommunication {
         return ResponseEntity.ok().build();
     }
 
+    @Transactional
     public List<Brand> getBrandsFromApi() {
         List<Brand> brands = new ArrayList<>();
         ParameterizedTypeReference responseType = new ParameterizedTypeReference<List<Brand>>() {};
