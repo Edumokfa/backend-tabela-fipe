@@ -1,12 +1,7 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
-import br.com.integracaoFipe.integracaoFipe.dao.ModelsRepository;
-import br.com.integracaoFipe.integracaoFipe.dao.ModelsYearRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.VehicleRepository;
 import br.com.integracaoFipe.integracaoFipe.model.*;
-import br.com.integracaoFipe.integracaoFipe.utils.BaseApiCommunication;
-import br.com.integracaoFipe.integracaoFipe.utils.ListUtil;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,15 +11,17 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class VehicleService {
 
     private final MongoTemplate mongoTemplate;
+    private final VehicleRepository vehicleRepository;
 
-    public VehicleService(MongoTemplate mongoTemplate) {
+
+    public VehicleService(MongoTemplate mongoTemplate, VehicleRepository vehicleRepository) {
         this.mongoTemplate = mongoTemplate;
+        this.vehicleRepository = vehicleRepository;
     }
 
     public List<Vehicle> getFilteredVehicle(
@@ -65,5 +62,9 @@ public class VehicleService {
 
         Query query = new Query(criteria);
         return mongoTemplate.find(query, Vehicle.class);
+    }
+
+    public ResponseEntity countVehicles() {
+        return ResponseEntity.ok(vehicleRepository.count());
     }
 }

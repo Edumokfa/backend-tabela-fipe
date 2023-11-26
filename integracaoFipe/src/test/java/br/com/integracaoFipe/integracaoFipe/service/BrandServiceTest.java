@@ -1,6 +1,7 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
 import br.com.integracaoFipe.integracaoFipe.dao.BrandsRepository;
+import br.com.integracaoFipe.integracaoFipe.dao.IterationLogRepository;
 import br.com.integracaoFipe.integracaoFipe.model.Brand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,8 @@ public class BrandServiceTest {
 
     @Mock
     private BrandsRepository brandsRepository;
+    @Mock
+    private IterationLogService iterationLogService;
 
     @InjectMocks
     private BrandService brandService;
@@ -31,7 +34,7 @@ public class BrandServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        brandService = new BrandService(brandsRepository);
+        brandService = new BrandService(brandsRepository, iterationLogService);
         brandService.setApiExternalUrl("https://parallelum.com.br/fipe/api/v1/");
     }
 

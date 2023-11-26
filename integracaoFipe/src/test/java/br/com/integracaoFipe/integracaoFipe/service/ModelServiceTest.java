@@ -1,8 +1,10 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
+import br.com.integracaoFipe.integracaoFipe.dao.IterationLogRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.ModelsRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.ModelsYearRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.VehicleRepository;
+import br.com.integracaoFipe.integracaoFipe.model.IterationLog;
 import br.com.integracaoFipe.integracaoFipe.model.Model;
 import br.com.integracaoFipe.integracaoFipe.model.Vehicle;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +26,9 @@ public class ModelServiceTest {
 
     @Mock
     private ModelsRepository modelsRepository;
+
+    @Mock
+    private IterationLogService iterationLogService;
 
     @Mock
     private ModelsYearRepository modelsYearRepository;

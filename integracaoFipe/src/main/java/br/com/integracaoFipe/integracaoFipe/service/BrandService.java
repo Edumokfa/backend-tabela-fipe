@@ -1,7 +1,9 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
 import br.com.integracaoFipe.integracaoFipe.dao.BrandsRepository;
+import br.com.integracaoFipe.integracaoFipe.dao.IterationLogRepository;
 import br.com.integracaoFipe.integracaoFipe.model.Brand;
+import br.com.integracaoFipe.integracaoFipe.model.IterationLog;
 import br.com.integracaoFipe.integracaoFipe.utils.BaseApiCommunication;
 import br.com.integracaoFipe.integracaoFipe.utils.ListUtil;
 import org.springframework.core.ParameterizedTypeReference;
@@ -9,18 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BrandService extends BaseApiCommunication {
-
     private final BrandsRepository brandsRepository;
+    private final IterationLogService iterationLogService;
 
-    public BrandService(BrandsRepository brandsRepository) {
+    public BrandService(BrandsRepository brandsRepository, IterationLogService iterationLogService) {
         this.brandsRepository = brandsRepository;
+        this.iterationLogService = iterationLogService;
     }
 
     public ResponseEntity<List<Brand>> getAllBrands() {
@@ -64,6 +64,10 @@ public class BrandService extends BaseApiCommunication {
         return ResponseEntity.ok(brand);
     }
 
+    public ResponseEntity countBrands() {
+        return ResponseEntity.ok(brandsRepository.count());
+    }
+
     public ResponseEntity deleteBrand(Integer brandId) {
         Optional<Brand> brandOnDb = brandsRepository.findById(brandId);
         if (!brandOnDb.isPresent()) {
@@ -85,7 +89,10 @@ public class BrandService extends BaseApiCommunication {
         brands.addAll(carBrands);
         brands.addAll(bikeBrands);
         brands.addAll(truckBrands);
+
         brandsRepository.saveAll(brands);
+        iterationLogService.createIterationLog("B");
+
         return brands;
     }
 }

@@ -61,4 +61,14 @@ public class BrandController {
     public ResponseEntity deleteBrands(@PathVariable @Parameter(description = "Código da marca") Integer brandId) {
         return brandService.deleteBrand(brandId);
     }
+
+    @Operation(description = "GET responsável por contar quantas marcas existem no cache da aplicação")
+    @GetMapping("/marcas/quantidade")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna sucesso caso seja possível contar quantas marcas existem no cache da aplicação"),
+    })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity countBrands() {
+        return brandService.countBrands();
+    }
 }

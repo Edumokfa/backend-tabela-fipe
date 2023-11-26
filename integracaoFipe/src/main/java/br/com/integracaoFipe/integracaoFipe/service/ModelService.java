@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
+import br.com.integracaoFipe.integracaoFipe.dao.IterationLogRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.ModelsRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.ModelsYearRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.VehicleRepository;
@@ -12,9 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ModelService extends BaseApiCommunication {
@@ -22,13 +23,15 @@ public class ModelService extends BaseApiCommunication {
     private final ModelsRepository modelsRepository;
     private final ModelsYearRepository modelsYearRepository;
     private final VehicleRepository vehicleRepository;
+    private final IterationLogService iterationLogService;
     private final VehicleService vehicleService;
 
-    public ModelService(ModelsRepository modelsRepository, ModelsYearRepository modelsYearRepository, VehicleRepository vehicleRepository, VehicleService vehicleService) {
+    public ModelService(ModelsRepository modelsRepository, ModelsYearRepository modelsYearRepository, VehicleRepository vehicleRepository, VehicleService vehicleService, IterationLogService iterationLogService) {
         this.modelsRepository = modelsRepository;
         this.modelsYearRepository = modelsYearRepository;
         this.vehicleRepository = vehicleRepository;
         this.vehicleService = vehicleService;
+        this.iterationLogService = iterationLogService;
     }
 
     public ResponseEntity<List<Model>> getAllModelsFromBrand(Integer brandId) {
@@ -57,7 +60,9 @@ public class ModelService extends BaseApiCommunication {
                 modelsYearRepository.saveAll(modelYears);
                 m.setModelYears(modelYears);
             });
+
             modelsRepository.saveAll(modelsList);
+            iterationLogService.createIterationLog("M");
             return modelsList;
         }
         return new ArrayList<>();
@@ -95,6 +100,10 @@ public class ModelService extends BaseApiCommunication {
             filteredVehicles = vehicleService.getFilteredVehicle(brandId, startYear, endYear, minValue, maxValue, gasType, vehicleType);
         }
         return ResponseEntity.ok(filteredVehicles);
+    }
+
+    public ResponseEntity countModels() {
+        return ResponseEntity.ok(modelsRepository.count());
     }
 
     private String getModelsApiUrl(Integer brandId) {

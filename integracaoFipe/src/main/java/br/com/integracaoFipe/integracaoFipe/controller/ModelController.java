@@ -46,4 +46,14 @@ public class ModelController {
                                                            @RequestParam(required = false) @Parameter(description = "Tipo de veículo") String vehicleType) {
         return modelService.getFilteredModelsFromApi(brandId, startYear, endYear, minValue, maxValue, gasType, vehicleType);
     }
+
+    @Operation(description = "GET responsável por contar quantos modelos existem no cache da aplicação")
+    @GetMapping("/modelos/quantidade")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna sucesso caso seja possível contar quantos modelos existem no cache da aplicação"),
+    })
+    @CrossOrigin(origins = "*")
+    public ResponseEntity countModels() {
+        return modelService.countModels();
+    }
 }
