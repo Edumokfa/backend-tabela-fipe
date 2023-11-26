@@ -4,6 +4,7 @@ import br.com.integracaoFipe.integracaoFipe.dao.IterationLogRepository;
 import br.com.integracaoFipe.integracaoFipe.model.IterationLog;
 import br.com.integracaoFipe.integracaoFipe.utils.ListUtil;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -11,11 +12,9 @@ import java.util.List;
 
 @Service
 public class IterationLogService {
-    private final MongoTemplate mongoTemplate;
     private final IterationLogRepository iterationLogRepository;
 
     public IterationLogService(MongoTemplate mongoTemplate, IterationLogRepository iterationLogRepository) {
-        this.mongoTemplate = mongoTemplate;
         this.iterationLogRepository = iterationLogRepository;
     }
 
@@ -30,5 +29,14 @@ public class IterationLogService {
         iterationLog.setData(new Date());
         iterationLog.setTipo(tipo);
         iterationLogRepository.save(iterationLog);
+    }
+
+    public ResponseEntity getLastIterationPerType(String tipo) {
+        List<IterationLog> ultimoLog = iterationLogRepository.findTopId(tipo);
+        if (ListUtil.isNotEmpty(ultimoLog)) {
+            return ResponseEntity.ok(ultimoLog.get(0));
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }
