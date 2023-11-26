@@ -18,7 +18,7 @@ public class VehicleController {
     }
 
     @Operation(description = "GET responsável por contar quantos veículos existem no cache da aplicação")
-    @GetMapping("/vehicles/quantidade")
+    @GetMapping("/veiculos/quantidade")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna sucesso caso seja possível contar quantos veículos existem no cache da aplicação"),
     })
@@ -28,7 +28,7 @@ public class VehicleController {
     }
 
     @Operation(description = "GET responsável por contar quantos veículos existem no cache da aplicação")
-    @GetMapping("/vehicles/grafico")
+    @GetMapping("/veiculos/grafico")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna sucesso caso seja possível contar quantos veículos existem no cache da aplicação"),
     })
