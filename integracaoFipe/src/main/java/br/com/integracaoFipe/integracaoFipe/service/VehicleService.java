@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.service;
 
+import br.com.integracaoFipe.integracaoFipe.dao.BrandsRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.ModelsRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.VehicleRepository;
 import br.com.integracaoFipe.integracaoFipe.dto.GraphicData;
@@ -8,12 +9,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class VehicleService {
@@ -21,12 +23,14 @@ public class VehicleService {
     private final MongoTemplate mongoTemplate;
     private final VehicleRepository vehicleRepository;
     private final ModelsRepository modelsRepository;
+    private final BrandsRepository brandsRepository;
 
 
-    public VehicleService(MongoTemplate mongoTemplate, VehicleRepository vehicleRepository, ModelsRepository modelsRepository) {
+    public VehicleService(MongoTemplate mongoTemplate, VehicleRepository vehicleRepository, ModelsRepository modelsRepository, BrandsRepository brandsRepository) {
         this.mongoTemplate = mongoTemplate;
         this.vehicleRepository = vehicleRepository;
         this.modelsRepository = modelsRepository;
+        this.brandsRepository = brandsRepository;
     }
 
     public ResponseEntity countVehicles() {
@@ -34,15 +38,11 @@ public class VehicleService {
     }
 
     public ResponseEntity getTop10ModelsWithModelYears() {
-        Criteria unwindModelYearsCriteria = Criteria.where("modelYears").exists(true);
-
-        AggregationOperation group = Aggregation.group("_id").count().as("modelYearCount");
-        AggregationOperation sort = Aggregation.sort(org.springframework.data.domain.Sort.Direction.DESC, "modelYearCount");
+        AggregationOperation group = Aggregation.group("brandId").count().as("modelCount");
+        AggregationOperation sort = Aggregation.sort(org.springframework.data.domain.Sort.Direction.DESC, "modelCount");
         AggregationOperation limit = Aggregation.limit(10);
 
         Aggregation aggregation = Aggregation.newAggregation(
-                Aggregation.match(unwindModelYearsCriteria),
-                Aggregation.unwind("modelYears"),
                 group,
                 sort,
                 limit
@@ -51,11 +51,11 @@ public class VehicleService {
         AggregationResults<Model> results = mongoTemplate.aggregate(aggregation, "models", Model.class);
         List<GraphicData> graphicData = new ArrayList<>();
         for (Model model: results.getMappedResults()) {
-            Model findModel = modelsRepository.findById(model.get_id()).orElse(null);
+            Brand findBrand = brandsRepository.findById(Integer.parseInt(model.get_id())).orElse(null);
             GraphicData data = new GraphicData();
-            if (findModel != null) {
-                data.setMarca(findModel.getModelYears().get(0).getVehicle().getModel());
-                data.setQuantidadeModelos(findModel.getModelYears().size());
+            if (findBrand != null) {
+                data.setMarca(findBrand.getName());
+                data.setQuantidadeModelos(model.getModelCount());
             }
             graphicData.add(data);
         }

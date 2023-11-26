@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +28,6 @@ public class Model implements Serializable {
     @DBRef
     @JsonProperty("anos")
     private List<ModelYear> modelYears;
+    @JsonIgnore
+    private Integer modelCount;
 }
