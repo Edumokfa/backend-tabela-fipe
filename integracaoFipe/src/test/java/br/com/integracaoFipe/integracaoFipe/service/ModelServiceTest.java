@@ -51,7 +51,7 @@ public class ModelServiceTest {
     @Test
     public void testGetAllModelsFromBrand() {
         List<Model> mockModels = new ArrayList<>();
-        mockModels.add(new Model("1", "Model1", 1, new ArrayList<>()));
+        mockModels.add(new Model("1", "Model1", 1, new ArrayList<>(), 1));
         when(modelsRepository.getModelByBrandId(1)).thenReturn(mockModels);
 
         ResponseEntity<List<Model>> response = modelService.getAllModelsFromBrand(1);
