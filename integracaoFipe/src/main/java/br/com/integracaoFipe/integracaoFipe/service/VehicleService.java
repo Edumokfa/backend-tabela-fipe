@@ -5,6 +5,7 @@ import br.com.integracaoFipe.integracaoFipe.dao.ModelsRepository;
 import br.com.integracaoFipe.integracaoFipe.dao.VehicleRepository;
 import br.com.integracaoFipe.integracaoFipe.dto.GraphicData;
 import br.com.integracaoFipe.integracaoFipe.model.*;
+import br.com.integracaoFipe.integracaoFipe.utils.ListUtil;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
@@ -22,14 +23,12 @@ public class VehicleService {
 
     private final MongoTemplate mongoTemplate;
     private final VehicleRepository vehicleRepository;
-    private final ModelsRepository modelsRepository;
     private final BrandsRepository brandsRepository;
 
 
-    public VehicleService(MongoTemplate mongoTemplate, VehicleRepository vehicleRepository, ModelsRepository modelsRepository, BrandsRepository brandsRepository) {
+    public VehicleService(MongoTemplate mongoTemplate, VehicleRepository vehicleRepository, BrandsRepository brandsRepository) {
         this.mongoTemplate = mongoTemplate;
         this.vehicleRepository = vehicleRepository;
-        this.modelsRepository = modelsRepository;
         this.brandsRepository = brandsRepository;
     }
 
@@ -49,6 +48,11 @@ public class VehicleService {
         );
 
         AggregationResults<Model> results = mongoTemplate.aggregate(aggregation, "models", Model.class);
+
+        if (results == null) {
+            return ResponseEntity.ok(new ArrayList<>());
+        }
+
         List<GraphicData> graphicData = new ArrayList<>();
         for (Model model: results.getMappedResults()) {
             Brand findBrand = brandsRepository.findById(Integer.parseInt(model.get_id())).orElse(null);
