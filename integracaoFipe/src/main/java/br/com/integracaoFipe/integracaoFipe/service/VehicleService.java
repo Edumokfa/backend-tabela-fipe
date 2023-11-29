@@ -60,8 +60,8 @@ public class VehicleService {
             if (findBrand != null) {
                 data.setMarca(findBrand.getName());
                 data.setQuantidadeModelos(model.getModelCount());
+                graphicData.add(data);
             }
-            graphicData.add(data);
         }
         return ResponseEntity.ok(graphicData);
     }
