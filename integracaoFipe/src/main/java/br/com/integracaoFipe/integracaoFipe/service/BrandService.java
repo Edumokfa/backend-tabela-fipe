@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.*;
 
@@ -38,7 +39,7 @@ public class BrandService extends BaseApiCommunication {
         Integer finalBrandId = brandId;
 
         if (brandId == null) {
-            brandId = allBrands.stream().map(Brand::get_id).max(Integer::compare).orElse(0);
+            brandId = allBrands.stream().map(Brand::get_id).max(Integer::compare).orElse(100000);
             brand.set_id(brandId + 1);
         }
 
@@ -81,20 +82,24 @@ public class BrandService extends BaseApiCommunication {
     @Transactional
     public List<Brand> getBrandsFromApi() {
         List<Brand> brands = new ArrayList<>();
-        ParameterizedTypeReference responseType = new ParameterizedTypeReference<List<Brand>>() {};
-        List<Brand> carBrands = getListDataFromUrl("/carros/marcas", responseType);
-        List<Brand> bikeBrands = getListDataFromUrl("/motos/marcas", responseType);
-        List<Brand> truckBrands = getListDataFromUrl("/caminhoes/marcas", responseType);
-        carBrands.forEach(c -> c.setType("Carro"));
-        bikeBrands.forEach(c -> c.setType("Moto"));
-        truckBrands.forEach(c -> c.setType("Caminhão"));
-        brands.addAll(carBrands);
-        brands.addAll(bikeBrands);
-        brands.addAll(truckBrands);
+        try {
+            ParameterizedTypeReference responseType = new ParameterizedTypeReference<List<Brand>>() {
+            };
+            List<Brand> carBrands = getListDataFromUrl("/carros/marcas", responseType);
+            List<Brand> bikeBrands = getListDataFromUrl("/motos/marcas", responseType);
+            List<Brand> truckBrands = getListDataFromUrl("/caminhoes/marcas", responseType);
+            carBrands.forEach(c -> c.setType("Carro"));
+            bikeBrands.forEach(c -> c.setType("Moto"));
+            truckBrands.forEach(c -> c.setType("Caminhão"));
+            brands.addAll(carBrands);
+            brands.addAll(bikeBrands);
+            brands.addAll(truckBrands);
 
-        brandsRepository.saveAll(brands);
-        iterationLogService.createIterationLog("B");
-
+            brandsRepository.saveAll(brands);
+            iterationLogService.createIterationLog("B");
+        } catch (HttpServerErrorException e){
+            //Este try catch é para caso a api estiver fora do ar, a aplicação funcionar.
+        }
         return brands;
     }
 }

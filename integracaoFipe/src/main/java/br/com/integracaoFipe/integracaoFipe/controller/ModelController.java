@@ -1,5 +1,6 @@
 package br.com.integracaoFipe.integracaoFipe.controller;
 
+import br.com.integracaoFipe.integracaoFipe.model.Brand;
 import br.com.integracaoFipe.integracaoFipe.model.Model;
 import br.com.integracaoFipe.integracaoFipe.model.Vehicle;
 import br.com.integracaoFipe.integracaoFipe.service.ModelService;

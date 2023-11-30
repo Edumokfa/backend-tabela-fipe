@@ -50,7 +50,7 @@ public class VehicleController {
         return vehicleService.updateVehicle(vehicle);
     }
 
-    @Operation(description = "PUT responsável por atualizar os veículos no cache da aplicação")
+    @Operation(description = "DELETE responsável por atualizar os veículos no cache da aplicação")
     @DeleteMapping("/veiculos/{codigoFipe}/{codigoAno}")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Retorna sucesso caso o veículo seja atualizado com sucesso"),

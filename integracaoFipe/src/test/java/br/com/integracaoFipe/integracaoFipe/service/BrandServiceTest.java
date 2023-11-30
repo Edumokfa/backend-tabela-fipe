@@ -20,16 +20,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 public class BrandServiceTest {
 
+    @InjectMocks
+    private BrandService brandService;
     @Mock
     private BrandsRepository brandsRepository;
     @Mock
     private IterationLogService iterationLogService;
-
-    @InjectMocks
-    private BrandService brandService;
 
     @BeforeEach
     public void setUp() {
